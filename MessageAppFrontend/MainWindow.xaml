@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessageAppFrontend"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="400">
+        Title="Logowanie" Height="500" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#f2f2f2">
     <Grid>
-
+        <ContentControl x:Name="MainContent"/>
     </Grid>
 </Window>
