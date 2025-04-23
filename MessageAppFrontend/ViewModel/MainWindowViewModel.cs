@@ -10,7 +10,7 @@ using MessageAppFrontend.View;
 
 namespace MessageAppFrontend.ViewModel
 {
-    public class MainWindowViewModel :ObservableObject
+    public class MainWindowViewModel : ObservableObject
     {
         public UserControl _currentView = null!;
         public UserControl CurrentView 

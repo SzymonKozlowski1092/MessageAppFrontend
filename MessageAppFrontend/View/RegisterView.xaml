@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MessageAppFrontend.View"
+             xmlns:local="clr-namespace:MessageAppFrontend.View" xmlns:components="clr-namespace:MessageAppFrontend.Components"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="500">
 
@@ -23,33 +23,38 @@
                        Foreground="#333"/>
 
             <TextBlock Text="Email" Margin="0,0,0,5" Foreground="#555"/>
-            <TextBox Height="30" Margin="0,0,0,15" Padding="5" 
-                     BorderBrush="#ccc"/>
+            <TextBox Height="30" Margin="0,0,0,15" 
+                     Padding="5" BorderBrush="#ccc"
+                     Text="{Binding Email}"/>
 
             <TextBlock Text="Nazwa użytkownika" Margin="0,0,0,5" Foreground="#555"/>
-            <TextBox Height="30" Margin="0,0,0,15" Padding="5" 
-                     BorderBrush="#ccc"/>
+            <TextBox Height="30" Margin="0,0,0,15" 
+                     Padding="5" BorderBrush="#ccc"
+                     Text="{Binding Username}"/>
 
             <TextBlock Text="Wyświetlana nazwa" Margin="0,0,0,5" Foreground="#555"/>
-            <TextBox Height="30" Margin="0,0,0,15" Padding="5" 
-                     BorderBrush="#ccc"/>
+            <TextBox Height="30" Margin="0,0,0,15" 
+                     Padding="5" BorderBrush="#ccc"
+                     Text="{Binding DisplayName}"/>
 
             <TextBlock Text="Hasło" Margin="0,0,0,5" Foreground="#555"/>
-            <PasswordBox Height="30" Margin="0,0,0,15" Padding="5" 
-                         BorderBrush="#ccc" 
-                         x:Name="PasswordBox"/>
+            <components:BindablePasswordBox Height="30" Margin="0,0,0,15" 
+                                            BorderBrush="#ccc"
+                                            Password="{Binding Password}"/>
 
             <TextBlock Text="Potwierdź hasło" Margin="0,0,0,5" Foreground="#555"/>
-            <PasswordBox Height="30" Margin="0,0,0,20" Padding="5" 
-                         BorderBrush="#ccc"
-                         x:Name="ConfirmPasswordBox"/>
+            <components:BindablePasswordBox Height="30" Margin="0,0,0,20" 
+                                            BorderBrush="#ccc" 
+                                            Password="{Binding ConfirmPassword}"/>
 
             <Button Content="Zarejestruj się" 
-                    Style="{StaticResource FormsButton}">
+                    Style="{StaticResource FormsButton}"
+                    Command="{Binding RegisterCommand}">
             </Button>
 
             <Button Style="{StaticResource LinkButton}"
-                    Margin="10">
+                    Margin="10"
+                    Command="{Binding GoToLoginViewCommand}">
                 Już masz konto? Zaloguj się
             </Button>
         </StackPanel>

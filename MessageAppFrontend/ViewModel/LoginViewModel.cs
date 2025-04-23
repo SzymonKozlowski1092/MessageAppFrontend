@@ -3,7 +3,6 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MessageAppFrontend.Common;
-using MessageAppFrontend.View;
 
 namespace MessageAppFrontend.ViewModel
 {

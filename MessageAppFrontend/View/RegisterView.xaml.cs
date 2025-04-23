@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using MessageAppFrontend.ViewModel;
 
 namespace MessageAppFrontend.View
 {
@@ -11,7 +10,6 @@ namespace MessageAppFrontend.View
         public RegisterView()
         {
             InitializeComponent();
-            this.DataContext = new RegisterViewModel();
         }
     }
 }
