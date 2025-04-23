@@ -8,7 +8,7 @@ namespace MessageAppFrontend.ViewModel
     public class LoginViewModel : ObservableObject
     {
         private string? _username;
-        private string? _password = "Haslo";
+        private string? _password;
 
         public string? Username
         {
