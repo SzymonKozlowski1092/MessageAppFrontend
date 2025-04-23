@@ -2,11 +2,15 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MessageAppFrontend.Common;
+using MessageAppFrontend.View;
 
 namespace MessageAppFrontend.ViewModel
 {
     public class LoginViewModel : ObservableObject
     {
+        private readonly IViewNavigation _viewNavigation;
+
         private string? _username;
         private string? _password;
 
@@ -19,6 +23,11 @@ namespace MessageAppFrontend.ViewModel
         {
             get => _password;
             set => SetProperty(ref _password, value);
+        }
+
+        public LoginViewModel(IViewNavigation viewNavigation)
+        {
+            _viewNavigation = viewNavigation;
         }
 
         public ICommand LoginCommand => new RelayCommand(() =>
@@ -35,7 +44,7 @@ namespace MessageAppFrontend.ViewModel
 
         public ICommand RegisterCommand => new RelayCommand(() =>
         {
-            MessageBox.Show("Register");
+            _viewNavigation.NavigateTo<RegisterViewModel>();
         });
 
         public ICommand ResetPasswordCommand => new RelayCommand(() =>

@@ -9,6 +9,6 @@
         WindowStartupLocation="CenterScreen"
         Background="#f2f2f2">
     <Grid>
-        <ContentControl x:Name="MainContent"/>
+        <ContentControl Content="{Binding CurrentView}"/>
     </Grid>
 </Window>
