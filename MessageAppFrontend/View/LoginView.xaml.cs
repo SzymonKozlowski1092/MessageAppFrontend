@@ -11,7 +11,6 @@ namespace MessageAppFrontend.View
         public LoginView()
         {
             InitializeComponent();
-            this.DataContext = new LoginViewModel();
         }
     }
 }
