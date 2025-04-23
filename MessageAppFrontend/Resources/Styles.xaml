@@ -4,7 +4,7 @@
     <!--FORMS BUTTON-->
     <Style TargetType="Button" x:Key="FormsButton">
         <Setter Property="Width" Value="150"/>
-        <Setter Property="Height" Value="35"/>
+        <Setter Property="Height" Value="40"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Background" Value="#4CAF50"/>
         <Setter Property="Foreground" Value="White"/>

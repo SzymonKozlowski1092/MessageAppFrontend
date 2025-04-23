@@ -11,7 +11,7 @@ namespace MessageAppFrontend
         public MainWindow()
         {
             InitializeComponent();
-            MainContent.Content = new RegisterView();
+            MainContent.Content = new LoginView();
         }
     }
 }
