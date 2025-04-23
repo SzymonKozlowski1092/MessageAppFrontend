@@ -28,42 +28,19 @@
             <TextBlock Text="Hasło" Margin="0,0,0,5" Foreground="#555"/>
             <PasswordBox Height="30" Margin="0,0,0,20" Padding="5" BorderBrush="#ccc"/>
 
-            <Button Content="Zaloguj" 
-                Width="150" Height="35"
-                HorizontalAlignment="Center"
-                Cursor="Hand"
-                FontWeight="SemiBold"
-                Background="#4CAF50" 
-                Foreground="White"
-                BorderThickness="0">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                            CornerRadius="5" 
-                            Padding="10"
-                            SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
+            <Button Content="Zaloguj"
+                    Style="{StaticResource FormsButton}">
+
             </Button>
 
-            <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">
-                <Button Background="Transparent"
-                    BorderThickness="0"
-                    Cursor="Hand">
-                    <TextBlock Text="Zarejestruj się" 
-                           Foreground="#007ACC"
-                           TextDecorations="Underline"/>
+            <StackPanel HorizontalAlignment="Center">
+                <Button Style="{StaticResource LinkButton}"
+                        Margin="10">
+                    Nie posiadasz konta?
                 </Button>
 
-                <Button Background="Transparent"
-                    BorderThickness="0"
-                    Cursor="Hand">
-                    <TextBlock Text="Ustaw nowe hasło" 
-                           Foreground="#007ACC"
-                           TextDecorations="Underline"/>
+                <Button Style="{StaticResource LinkButton}">
+                    Nie pamiętasz hasła?
                 </Button>
             </StackPanel>
         </StackPanel>
