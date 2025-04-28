@@ -3,12 +3,15 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MessageAppFrontend.Common;
+using MessageAppFrontend.Models;
+using MessageAppFrontend.Services;
 
 namespace MessageAppFrontend.ViewModel
 {
     public class RegisterViewModel : ObservableObject
     {
         private readonly IViewNavigation _viewNavigation;
+        private readonly IAccountService _accountService;
 
         public string? _username;
         public string? _displayName;
@@ -44,24 +47,40 @@ namespace MessageAppFrontend.ViewModel
         }
         #endregion
 
-        public RegisterViewModel(IViewNavigation viewNavigation)
+        public RegisterViewModel(IViewNavigation viewNavigation, IAccountService accountService)
         {
             _viewNavigation = viewNavigation;
+            _accountService = accountService;
         }
 
-        public ICommand GoToLoginViewCommand => new AsyncRelayCommand(async () =>
+        public ICommand GoToLoginViewCommand => new RelayCommand(() =>
         {
             ClearTextBoxes();
             _viewNavigation.NavigateTo<LoginViewModel>();
         });
 
-        public ICommand RegisterCommand => new RelayCommand(() =>
+        public ICommand RegisterCommand => new AsyncRelayCommand(async () =>
         {
-            MessageBox.Show($"Username: {Username}\n" +
-                $"Displayname: {DisplayName}\n" +
-                $"Email: {Email}\n" +
-                $"Password: {Password}\n" +
-                $"ConfirmPassword: {ConfirmPassword}");
+            UserRegister userRegister = new UserRegister
+            {
+                Username = Username,
+                DisplayName = DisplayName,
+                Email = Email,
+                Password = Password,
+                ConfirmPassword = ConfirmPassword
+            };
+
+            bool registerResult = await _accountService.RegisterAsync(userRegister);
+            if(registerResult)
+            {
+                MessageBox.Show("Registration successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClearTextBoxes();
+                _viewNavigation.NavigateTo<LoginViewModel>();
+            }
+            else
+            {
+                MessageBox.Show("Registration failed. Please try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         });
 
         private void ClearTextBoxes()

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows;
 using MessageAppFrontend.Common;
+using MessageAppFrontend.Services;
 using MessageAppFrontend.View;
 using MessageAppFrontend.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,29 +18,43 @@ namespace MessageAppFrontend
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            LoggingConfig.Setup();
+            var logger = NLog.LogManager.GetCurrentClassLogger();
 
-            _serviceProvider = serviceCollection.BuildServiceProvider();
+            try
+            {
+                var serviceCollection = new ServiceCollection();
+                ConfigureServices(serviceCollection);
 
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-            var viewNavigation = _serviceProvider.GetRequiredService<IViewNavigation>();
-            mainWindow.DataContext = _serviceProvider.GetRequiredService<MainWindowViewModel>();
-            viewNavigation.NavigateTo<LoginViewModel>();
-            mainWindow.Show();
+                _serviceProvider = serviceCollection.BuildServiceProvider();
+
+                var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+                var viewNavigation = _serviceProvider.GetRequiredService<IViewNavigation>();
+                mainWindow.DataContext = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+                viewNavigation.NavigateTo<LoginViewModel>();
+                mainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Application startup failed");
+                MessageBox.Show("Błąd krytyczny przy starcie aplikacji");
+                throw;
+            }
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<RegisterView>();
+            services.AddSingleton<LoginView>();
+
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<RegisterViewModel>();
             services.AddSingleton<MainWindowViewModel>();
 
-            services.AddSingleton<IViewNavigation, ViewNavigation>();
+            services.AddSingleton<IAccountService, AccountService>();
 
-            services.AddSingleton<MainWindow>();
-            services.AddSingleton<RegisterView>();
-            services.AddSingleton<LoginView>();
+            services.AddSingleton<IViewNavigation, ViewNavigation>();
         }
 
         private void OnExit(object sender, ExitEventArgs e)

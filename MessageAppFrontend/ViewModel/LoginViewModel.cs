@@ -3,12 +3,15 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MessageAppFrontend.Common;
+using MessageAppFrontend.Models;
+using MessageAppFrontend.Services;
 
 namespace MessageAppFrontend.ViewModel
 {
     public class LoginViewModel : ObservableObject
     {
         private readonly IViewNavigation _viewNavigation;
+        private readonly IAccountService _accountService;
 
         private string? _username;
         private string? _password;
@@ -24,20 +27,23 @@ namespace MessageAppFrontend.ViewModel
             set => SetProperty(ref _password, value);
         }
 
-        public LoginViewModel(IViewNavigation viewNavigation)
+        public LoginViewModel(IViewNavigation viewNavigation, IAccountService accountService)
         {
             _viewNavigation = viewNavigation;
+            _accountService = accountService;
         }
 
-        public ICommand LoginCommand => new RelayCommand(() =>
+        public ICommand LoginCommand => new AsyncRelayCommand(async () =>
         {
-            if(!(string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password)))
+            UserLogin userLogin = new UserLogin(Username!, Password!);
+            bool loginResult = await _accountService.LoginAsync(userLogin);
+            if(loginResult)
             {
-                MessageBox.Show($"Login with: Username: {Username} and Password: {Password}");
+                MessageBox.Show("Login successful!");
             }
             else
             {
-                MessageBox.Show("Nieprawidłowe dane logowania.");
+                MessageBox.Show("Login failed. Please check your credentials.");
             }
         });
 
