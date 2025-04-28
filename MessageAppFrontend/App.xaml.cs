@@ -9,9 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MessageAppFrontend
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private IServiceProvider _serviceProvider = null!;
@@ -47,10 +44,12 @@ namespace MessageAppFrontend
             services.AddSingleton<MainWindow>();
             services.AddSingleton<RegisterView>();
             services.AddSingleton<LoginView>();
+            services.AddSingleton<MainAppView>();
 
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<RegisterViewModel>();
             services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<MainAppViewModel>();
 
             services.AddSingleton<IAccountService, AccountService>();
 
