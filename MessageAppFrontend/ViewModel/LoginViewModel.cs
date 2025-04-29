@@ -35,11 +35,11 @@ namespace MessageAppFrontend.ViewModel
 
         public ICommand LoginCommand => new AsyncRelayCommand(async () =>
         {
-            UserLogin userLogin = new UserLogin(Username!, Password!);
-            bool loginResult = await _accountService.LoginAsync(userLogin);
-            if(loginResult)
+            //UserLogin userLogin = new UserLogin(Username!, Password!);
+            //bool loginResult = await _accountService.LoginAsync(userLogin);
+            if(/*loginResult*/true)
             {
-                MessageBox.Show("Login successful!");
+                _viewNavigation.NavigateTo<MainAppViewModel>();
             }
             else
             {
