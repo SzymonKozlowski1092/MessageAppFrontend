@@ -11,7 +11,7 @@ namespace MessageAppFrontend.ViewModel
     public class RegisterViewModel : ObservableObject
     {
         private readonly IViewNavigation _viewNavigation;
-        private readonly IAccountService _accountService;
+        private readonly IAccountApiService _accountService;
 
         public string? _username;
         public string? _displayName;
@@ -47,7 +47,7 @@ namespace MessageAppFrontend.ViewModel
         }
         #endregion
 
-        public RegisterViewModel(IViewNavigation viewNavigation, IAccountService accountService)
+        public RegisterViewModel(IViewNavigation viewNavigation, IAccountApiService accountService)
         {
             _viewNavigation = viewNavigation;
             _accountService = accountService;

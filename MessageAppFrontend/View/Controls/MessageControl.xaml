@@ -17,8 +17,8 @@
 
             <!-- Treść wiadomości -->
             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                <TextBlock Text="{Binding SenderName}" FontWeight="Bold" Foreground="White" FontSize="14"/>
-                <TextBlock Text="{Binding MessageContent}" TextWrapping="Wrap" Foreground="White" FontSize="13" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding SenderDisplayName}" FontWeight="Bold" Foreground="White" FontSize="14"/>
+                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Foreground="White" FontSize="13" Margin="0,5,0,0"/>
             </StackPanel>
         </Grid>
     </Border>

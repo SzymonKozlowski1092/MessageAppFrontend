@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using MessageAppFrontend.Models;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace MessageAppFrontend.View.Controls
 {

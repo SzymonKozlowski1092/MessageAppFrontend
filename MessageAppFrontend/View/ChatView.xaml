@@ -27,29 +27,40 @@
 
         <!-- Wysyłanie wiadomości -->
         <Border Grid.Row="1" Background="#FF40444B" CornerRadius="10" Padding="8">
-            <DockPanel LastChildFill="True">
-                <Border Background="#FF2C2F33" CornerRadius="10" Margin="0,0,10,0" Height="60" VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <!-- TextBox dostosowuje się do dostępnej szerokości -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Przycisk ma stałą szerokość -->
+                </Grid.ColumnDefinitions>
+
+                <Border Background="#FF2C2F33" CornerRadius="10" Margin="0,0,10,0" Height="60" VerticalAlignment="Center" Grid.Column="0">
                     <TextBox x:Name="MessageInput"
-                             Text="{Binding NewMessageText, UpdateSourceTrigger=PropertyChanged}"
-                             Background="Transparent"
-                             Foreground="#FFB0BEC5"
-                             BorderThickness="0"
-                             VerticalContentAlignment="Center"
-                             Padding="10,0"
-                             FontSize="14"
-                             MinWidth="100" Width="612"/>
+                    Text="{Binding MessageContent, 
+                        Mode=TwoWay, 
+                        UpdateSourceTrigger=PropertyChanged}"
+                     Background="Transparent"
+                     Foreground="#FFB0BEC5"
+                     BorderThickness="0"
+                     VerticalContentAlignment="Center"
+                     Padding="10,0"
+                     FontSize="14"
+                     MinWidth="100"
+                     MaxHeight="60"
+                     TextWrapping="Wrap"/>
                 </Border>
+
                 <Button Content="Wyślij"
-                        Command="{Binding SendMessageCommand}"
-                        Background="#FF7289DA"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        BorderThickness="0"
-                        Height="60"
-                        Width="80"
-                        VerticalAlignment="Center"
-                        Cursor="Hand"/>
-            </DockPanel>
+                Style="{StaticResource FormsButton}"
+                Background="#FF7289DA"
+                FontWeight="Bold"
+                Command="{Binding SendMessageCommand}"
+                Height="60"
+                MinWidth="80"
+                VerticalAlignment="Center"
+                Grid.Column="1"/>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

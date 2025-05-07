@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows;
 using MessageAppFrontend.Common;
 using MessageAppFrontend.Services;
+using MessageAppFrontend.Services.Interfaces;
 using MessageAppFrontend.View;
 using MessageAppFrontend.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,7 +52,10 @@ namespace MessageAppFrontend
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<MainAppViewModel>();
 
-            services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<IAccountApiService, AccountApiService>();
+            services.AddSingleton<IUserApiService, UserApiService>();
+            services.AddSingleton<IChatApiService, ChatApiService>();
+            services.AddSingleton<IMessageApiService, MessageApiService>();
 
             services.AddSingleton<IViewNavigation, ViewNavigation>();
         }
