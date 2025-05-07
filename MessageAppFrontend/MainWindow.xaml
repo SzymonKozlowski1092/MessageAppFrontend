@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessageAppFrontend"
         mc:Ignorable="d"
-        Title="MessageApp" Height="650" Width="500"
+        Title="MessageApp" Height="600" Width="800"
         WindowStartupLocation="CenterScreen"
         Background="#f2f2f2">
     <Grid>

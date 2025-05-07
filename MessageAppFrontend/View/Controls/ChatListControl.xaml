@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="MessageAppFrontend.View.Controls.ChatListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MessageAppFrontend.View.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" Height="156">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Zdjęcie czatu -->
+        <Ellipse Width="50" Height="50" Fill="Gray" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <!-- Dane czatu -->
+        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" Margin="10,0,0,0">
+            <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" FontSize="14"/>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="{Binding LastMessageSenderDisplayName}" Foreground="White" FontSize="11"/>
+                <TextBlock Text=": " Foreground="White" FontSize="12"/>
+                <TextBlock Text="{Binding LastMessageContent}" Foreground="White" FontSize="11"/>
+                </StackPanel>
+            </StackPanel>
+    </Grid>
+</UserControl>

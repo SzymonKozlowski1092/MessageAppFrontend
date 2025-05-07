@@ -3,10 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MessageAppFrontend.View"
+             xmlns:local="clr-namespace:MessageAppFrontend.View" 
+             xmlns:controls="clr-namespace:MessageAppFrontend.View.Controls"
+             xmlns:views="clr-namespace:MessageAppFrontend.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" Background="#FF2C2F33">
+            <controls:MenuUserControl DockPanel.Dock="Top" DataContext="{Binding User}"/>
+
+            <ListBox ItemsSource="{Binding Chats}" 
+                     SelectedItem="{Binding SelectedChat, Mode=TwoWay}"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     Foreground="White">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <controls:ChatListControl/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <ContentControl Grid.Column="1" Content="{Binding ChatViewModel}">
+            <ContentControl.ContentTemplate>
+                <DataTemplate>
+                    <views:ChatView DataContext="{Binding}" />
+                </DataTemplate>
+            </ContentControl.ContentTemplate>
+        </ContentControl>
     </Grid>
 </UserControl>

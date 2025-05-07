@@ -11,7 +11,7 @@ namespace MessageAppFrontend.ViewModel
     public class LoginViewModel : ObservableObject
     {
         private readonly IViewNavigation _viewNavigation;
-        private readonly IAccountService _accountService;
+        private readonly IAccountApiService _accountService;
 
         private string? _username;
         private string? _password;
@@ -27,7 +27,7 @@ namespace MessageAppFrontend.ViewModel
             set => SetProperty(ref _password, value);
         }
 
-        public LoginViewModel(IViewNavigation viewNavigation, IAccountService accountService)
+        public LoginViewModel(IViewNavigation viewNavigation, IAccountApiService accountService)
         {
             _viewNavigation = viewNavigation;
             _accountService = accountService;
@@ -37,9 +37,10 @@ namespace MessageAppFrontend.ViewModel
         {
             UserLogin userLogin = new UserLogin(Username!, Password!);
             bool loginResult = await _accountService.LoginAsync(userLogin);
-            if(loginResult)
+            if (loginResult)
             {
-                MessageBox.Show("Login successful!");
+                _viewNavigation.NavigateTo<MainAppViewModel>();
+                ClearFields();
             }
             else
             {
@@ -56,5 +57,11 @@ namespace MessageAppFrontend.ViewModel
         {
             MessageBox.Show("Reset Password");
         });
+
+        private void ClearFields()
+        {
+            Username = string.Empty;
+            Password = string.Empty;
+        }
     }
 }

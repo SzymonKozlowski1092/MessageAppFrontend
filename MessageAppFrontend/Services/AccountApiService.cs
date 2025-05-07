@@ -1,17 +1,18 @@
 ﻿using MessageAppFrontend.Models;
 using MessageAppFrontend.Models.Dziekanat.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using RestSharp;
 
 namespace MessageAppFrontend.Services
 {
-    public class AccountService : IAccountService
+    public class AccountApiService : IAccountApiService
     {
         private readonly RestClient _restClient;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public AccountService()
+        public AccountApiService()
         {
             _restClient = new RestClient("https://localhost:7163/");
         }
@@ -29,7 +30,8 @@ namespace MessageAppFrontend.Services
                 var response = await _restClient.ExecuteAsync(request);
                 if (response.IsSuccessful)
                 {
-                    AuthToken.Instance.JwtToken = response.Content!.Trim();
+                    var tokenJson = JObject.Parse(response.Content!);
+                    AuthToken.Instance.JwtToken = tokenJson["token"]?.ToString();
                     return true;
                 }
                 else
@@ -48,11 +50,6 @@ namespace MessageAppFrontend.Services
         {
             try
             {
-                if(userRegister is null)
-                {
-                    throw new ArgumentNullException(nameof(userRegister), "UserRegister object cannot be null");
-                }
-
                 var request = new RestRequest("MessageApp/Account/Register", Method.Post);
                 
                 string userRegisterJson = JsonConvert.SerializeObject(userRegister);

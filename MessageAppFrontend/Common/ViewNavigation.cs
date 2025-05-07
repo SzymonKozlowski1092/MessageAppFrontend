@@ -29,6 +29,7 @@ namespace MessageAppFrontend.Common
             {
                 nameof(LoginViewModel) => new LoginView { DataContext = _serviceProvider.GetRequiredService<TViewModel>() },
                 nameof(RegisterViewModel) => new RegisterView { DataContext = _serviceProvider.GetRequiredService<TViewModel>() },
+                nameof(MainAppViewModel) => new MainAppView { DataContext = _serviceProvider.GetRequiredService<TViewModel>() },
                 _ => throw new InvalidOperationException("No view found.")
             };
 
