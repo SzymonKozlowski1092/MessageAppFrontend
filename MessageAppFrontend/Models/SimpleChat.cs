@@ -8,6 +8,7 @@ namespace MessageAppFrontend.Models
         private string _name = null!;
         private string _lastMessageContent = null!;
         private string _lastMessageSenderDisplayName = null!;
+        private DateTime _lastMessageSentTime = default;
 
         public Guid Id
         {
@@ -28,6 +29,12 @@ namespace MessageAppFrontend.Models
         {
             get => _lastMessageSenderDisplayName;
             set => SetProperty(ref _lastMessageSenderDisplayName, value);
+        }
+
+        public DateTime LastMessageSentTime
+        {
+            get => _lastMessageSentTime;
+            set => SetProperty(ref _lastMessageSentTime, value);
         }
     }
 }

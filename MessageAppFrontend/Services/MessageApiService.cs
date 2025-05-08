@@ -3,8 +3,9 @@ using MessageAppFrontend.Models.Dziekanat.Models;
 using MessageAppFrontend.Models;
 using NLog;
 using RestSharp;
+using MessageAppFrontend.Services.Interfaces;
 
-namespace MessageAppFrontend.Services.Interfaces
+namespace MessageAppFrontend.Services
 {
     public class MessageApiService : IMessageApiService
     {
@@ -23,8 +24,8 @@ namespace MessageAppFrontend.Services.Interfaces
             request.AddHeader("Authorization", $"Bearer {AuthToken.Instance.JwtToken}");
             request.AddJsonBody(new
             {
-                ChatId = newMessage.ChatId,
-                Content = newMessage.Content
+                newMessage.ChatId,
+                newMessage.Content
             });
 
             try

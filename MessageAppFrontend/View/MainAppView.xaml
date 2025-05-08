@@ -23,7 +23,8 @@
             <!-- Panel dolny z dwoma przyciskami obok siebie -->
             <StackPanel Orientation="Horizontal"
                 DockPanel.Dock="Bottom"
-                HorizontalAlignment="Center">
+                HorizontalAlignment="Center"
+                MaxWidth="200">
                 <Button Content="Add Chat" 
                 Command="{Binding AddChatCommand}" 
                 Background="Transparent"

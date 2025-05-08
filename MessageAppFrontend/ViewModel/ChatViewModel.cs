@@ -51,6 +51,8 @@ namespace MessageAppFrontend.ViewModel
             set => SetProperty(ref _messageContent, value);
         }
 
+        public event Action? MessagesLoaded;
+
         public ChatViewModel(Guid chatId, User user, IChatApiService chatApiService, IMessageApiService messageApiService)
         {
             _chatApiService = chatApiService;
@@ -93,6 +95,7 @@ namespace MessageAppFrontend.ViewModel
                 Users = new ObservableCollection<User>(Chat.Users);
                 Messages = new ObservableCollection<Message>(Chat.Messages);
             }
+            MessagesLoaded?.Invoke();
         }
 
         private async Task<Chat> GetChat(Guid chatId)

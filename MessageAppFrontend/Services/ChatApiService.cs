@@ -41,5 +41,30 @@ namespace MessageAppFrontend.Services
                 return new ApiResponse<Chat>(false, ex.Message, response is null ? 0 : (int)response!.StatusCode);
             }
         }
+
+        public async Task<ApiResponse> CreateChat(NewChat createChat)
+        {
+            RestResponse response = null!;
+            var request = new RestRequest($"Chat", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {AuthToken.Instance.JwtToken}");
+            request.AddJsonBody(createChat);
+            try
+            {
+                response = await _restClient.ExecuteAsync(request);
+                if(!response.IsSuccessful)
+                {
+                    return new ApiResponse(true, 
+                        response.ErrorException is null ? response.Content : response.ErrorException.Message
+                        , (int)response.StatusCode);
+                }
+
+                return new ApiResponse(true, (int)response.StatusCode);
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, ex.Message);
+                return new ApiResponse(false, ex.Message, response is null ? 0 : (int)response!.StatusCode);
+            }
+        }
     }
 }
