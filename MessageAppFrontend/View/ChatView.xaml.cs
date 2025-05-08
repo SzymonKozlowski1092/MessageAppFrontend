@@ -24,5 +24,11 @@ namespace MessageAppFrontend.View
         {
             InitializeComponent();
         }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChatMenuPopup.IsOpen = true;
+        }
+
     }
 }

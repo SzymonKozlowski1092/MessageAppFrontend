@@ -8,14 +8,67 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#FF2C2F33">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <!-- Lista wiadomości -->
+            <!-- Panel nagłówka -->
             <RowDefinition Height="Auto"/>
+            <!-- Lista wiadomości -->
+            <RowDefinition Height="*"/>
             <!-- Pole do wpisania wiadomości -->
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Nagłówek czatu -->
+        <Border Grid.Row="0" Background="#FF23272A" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Nazwa czatu -->
+                <TextBlock Text="{Binding ChatName}" 
+                   FontSize="18" 
+                   FontWeight="Bold" 
+                   Foreground="White"
+                   VerticalAlignment="Center" />
+
+                <!-- Przycisk menu + Popup -->
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <Button x:Name="MenuButton"
+                    Content="☰"
+                    FontSize="18"
+                    Width="40"
+                    Height="40"
+                    Background="Transparent"
+                    Foreground="White"
+                    BorderBrush="{x:Null}"
+                    Click="MenuButton_Click"/>
+
+                    <Popup x:Name="ChatMenuPopup"
+                   Placement="Bottom"
+                   PlacementTarget="{Binding ElementName=MenuButton}"
+                   StaysOpen="False"
+                   AllowsTransparency="True"
+                   PopupAnimation="Slide">
+                        <Border Background="#FF2C2F33" 
+                        Padding="10" 
+                        Width="{Binding ActualWidth, ElementName=RootGrid}" 
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="8"
+                        Margin="0,5,0,0">
+                            <StackPanel>
+                                <Button Content="Zmień nazwę czatu" Command="{Binding RenameChatCommand}" Style="{StaticResource MenuItemButtonStyle}" />
+                                <Button Content="Wyświetl członków" Command="{Binding ShowMembersCommand}" Style="{StaticResource MenuItemButtonStyle}" />
+                                <Button Content="Wyślij zaproszenie" Command="{Binding SendInviteCommand}" Style="{StaticResource MenuItemButtonStyle}" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </Grid>
+        </Border>
+
+
         <!-- Lista wiadomości -->
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
             <ItemsControl ItemsSource="{Binding Messages}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -26,40 +79,36 @@
         </ScrollViewer>
 
         <!-- Wysyłanie wiadomości -->
-        <Border Grid.Row="1" Background="#FF40444B" CornerRadius="10" Padding="8">
+        <Border Grid.Row="2" Background="#FF40444B" Padding="8">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <!-- TextBox dostosowuje się do dostępnej szerokości -->
                     <ColumnDefinition Width="Auto" />
-                    <!-- Przycisk ma stałą szerokość -->
                 </Grid.ColumnDefinitions>
 
                 <Border Background="#FF2C2F33" CornerRadius="10" Margin="0,0,10,0" Height="60" VerticalAlignment="Center" Grid.Column="0">
                     <TextBox x:Name="MessageInput"
-                    Text="{Binding MessageContent, 
-                        Mode=TwoWay, 
-                        UpdateSourceTrigger=PropertyChanged}"
-                     Background="Transparent"
-                     Foreground="#FFB0BEC5"
-                     BorderThickness="0"
-                     VerticalContentAlignment="Center"
-                     Padding="10,0"
-                     FontSize="14"
-                     MinWidth="100"
-                     MaxHeight="60"
-                     TextWrapping="Wrap"/>
+                         Text="{Binding MessageContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Background="Transparent"
+                         Foreground="#FFB0BEC5"
+                         BorderThickness="0"
+                         VerticalContentAlignment="Center"
+                         Padding="10,0"
+                         FontSize="14"
+                         MinWidth="100"
+                         MaxHeight="60"
+                         TextWrapping="Wrap"/>
                 </Border>
 
                 <Button Content="Wyślij"
-                Style="{StaticResource FormsButton}"
-                Background="#FF7289DA"
-                FontWeight="Bold"
-                Command="{Binding SendMessageCommand}"
-                Height="60"
-                MinWidth="80"
-                VerticalAlignment="Center"
-                Grid.Column="1"/>
+                    Style="{StaticResource FormsButton}"
+                    Background="#FF7289DA"
+                    FontWeight="Bold"
+                    Command="{Binding SendMessageCommand}"
+                    Height="60"
+                    MinWidth="80"
+                    VerticalAlignment="Center"
+                    Grid.Column="1"/>
             </Grid>
         </Border>
     </Grid>
