@@ -25,11 +25,12 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Nazwa czatu -->
-                <TextBlock Text="{Binding ChatName}" 
+                <TextBlock Text="{Binding Name}" 
                    FontSize="18" 
                    FontWeight="Bold" 
                    Foreground="White"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center"/>
 
                 <!-- Przycisk menu + Popup -->
                 <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -59,6 +60,7 @@
                                 <Button Content="Zmień nazwę czatu" Command="{Binding RenameChatCommand}" Style="{StaticResource MenuItemButtonStyle}" />
                                 <Button Content="Wyświetl członków" Command="{Binding ShowMembersCommand}" Style="{StaticResource MenuItemButtonStyle}" />
                                 <Button Content="Wyślij zaproszenie" Command="{Binding SendInviteCommand}" Style="{StaticResource MenuItemButtonStyle}" />
+                                <Button Content="Opuść Czat" Command="{Binding LeaveChatCommand}" Style="{StaticResource MenuItemButtonStyle}" Background="Red"/>
                             </StackPanel>
                         </Border>
                     </Popup>
@@ -68,7 +70,7 @@
 
 
         <!-- Lista wiadomości -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
+        <ScrollViewer x:Name="MessagesScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
             <ItemsControl ItemsSource="{Binding Messages}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

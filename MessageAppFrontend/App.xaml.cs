@@ -2,6 +2,8 @@
 using System.Data;
 using System.Windows;
 using MessageAppFrontend.Common;
+using MessageAppFrontend.Factories;
+using MessageAppFrontend.Factories.Interfaces;
 using MessageAppFrontend.Services;
 using MessageAppFrontend.Services.Interfaces;
 using MessageAppFrontend.View;
@@ -56,6 +58,9 @@ namespace MessageAppFrontend
             services.AddSingleton<IUserApiService, UserApiService>();
             services.AddSingleton<IChatApiService, ChatApiService>();
             services.AddSingleton<IMessageApiService, MessageApiService>();
+
+            services.AddSingleton<IChatViewModelFactory, ChatViewModelFactory>();
+            services.AddSingleton<INewChatViewModelFactory, NewChatViewModelFactory>();
 
             services.AddSingleton<IViewNavigation, ViewNavigation>();
         }
