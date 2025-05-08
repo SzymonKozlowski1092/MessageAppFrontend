@@ -15,13 +15,38 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Column="0" Background="#FF2C2F33">
-            <controls:MenuUserControl DockPanel.Dock="Top" DataContext="{Binding User}"/>
 
+            <controls:MenuUserControl DockPanel.Dock="Top"
+                              DataContext="{Binding User}"
+                              Padding="5"/>
+
+            <!-- Panel dolny z dwoma przyciskami obok siebie -->
+            <StackPanel Orientation="Horizontal"
+                DockPanel.Dock="Bottom"
+                HorizontalAlignment="Center">
+                <Button Content="Add Chat" 
+                Command="{Binding AddChatCommand}" 
+                Background="Transparent"
+                BorderThickness="2"
+                Foreground="White"
+                MinWidth="100"
+                MinHeight="40"/>
+                <Button Command="{Binding ShowNotificationsCommand}" 
+                Background="Transparent"
+                BorderThickness="2"
+                Foreground="White"
+                MinWidth="80"
+                MinHeight="40">
+                    <Image Width="24" Height="24" Source="../Resources/Images/NotificationsIcon.png"/>
+                </Button>
+            </StackPanel>
+
+            <!-- Lista czatów wypełniająca środek -->
             <ListBox ItemsSource="{Binding Chats}" 
                      SelectedItem="{Binding SelectedChat, Mode=TwoWay}"
                      Background="Transparent"
                      BorderThickness="0"
-                     Foreground="White">
+                     Foreground="White">    
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <controls:ChatListControl/>
