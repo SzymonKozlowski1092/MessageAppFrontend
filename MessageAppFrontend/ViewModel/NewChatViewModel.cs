@@ -45,6 +45,7 @@ namespace MessageAppFrontend.ViewModel
             }
 
             MessageBox.Show($"Czat: {newChat.Name} został utworzony");
+            ChatName = string.Empty;
         });
     }
 }

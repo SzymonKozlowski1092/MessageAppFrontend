@@ -1,12 +1,9 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 using MessageAppFrontend.Common;
 using MessageAppFrontend.Factories;
 using MessageAppFrontend.Factories.Interfaces;
 using MessageAppFrontend.Services;
 using MessageAppFrontend.Services.Interfaces;
-using MessageAppFrontend.View;
 using MessageAppFrontend.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,24 +42,22 @@ namespace MessageAppFrontend
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<MainWindow>();
-            services.AddSingleton<RegisterView>();
-            services.AddSingleton<LoginView>();
-            services.AddSingleton<MainAppView>();
 
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<RegisterViewModel>();
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<MainAppViewModel>();
 
-            services.AddSingleton<IAccountApiService, AccountApiService>();
-            services.AddSingleton<IUserApiService, UserApiService>();
-            services.AddSingleton<IChatApiService, ChatApiService>();
-            services.AddSingleton<IMessageApiService, MessageApiService>();
-
-            services.AddSingleton<IChatViewModelFactory, ChatViewModelFactory>();
-            services.AddSingleton<INewChatViewModelFactory, NewChatViewModelFactory>();
-
             services.AddSingleton<IViewNavigation, ViewNavigation>();
+
+            services.AddTransient<IAccountApiService, AccountApiService>();
+            services.AddTransient<IUserApiService, UserApiService>();
+            services.AddTransient<IChatApiService, ChatApiService>();
+            services.AddTransient<IMessageApiService, MessageApiService>();
+            services.AddTransient<IChatInvitationApiService, ChatInvitationApiService>();
+
+            services.AddTransient<IChatViewModelFactory, ChatViewModelFactory>();
+            services.AddTransient<INewChatViewModelFactory, NewChatViewModelFactory>();
         }
 
         private void OnExit(object sender, ExitEventArgs e)
@@ -73,5 +68,4 @@ namespace MessageAppFrontend
             }
         }
     }
-
 }
