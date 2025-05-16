@@ -12,6 +12,7 @@ namespace MessageAppFrontend.ViewModel
     {
         private readonly IChatApiService _chatApiService;
         private readonly IMessageApiService _messageApiService;
+        private readonly IChatInvitationApiService _chatInvitationApiService;
 
         private User user = null!;
         private Chat _chat = null!;
@@ -53,13 +54,13 @@ namespace MessageAppFrontend.ViewModel
 
         public event Action? MessagesLoaded;
 
-        public ChatViewModel(Guid chatId, User user, IChatApiService chatApiService, IMessageApiService messageApiService)
+        public ChatViewModel(Guid chatId, User user, IChatApiService chatApiService, IMessageApiService messageApiService, IChatInvitationApiService chatInvitationApiService)
         {
             _chatApiService = chatApiService;
             _messageApiService = messageApiService;
             User = user;
             Initialize(chatId);
-            
+            _chatInvitationApiService = chatInvitationApiService;
         }
 
         public ICommand SendMessageCommand => new AsyncRelayCommand(async () =>
@@ -84,6 +85,11 @@ namespace MessageAppFrontend.ViewModel
             });
 
             MessageContent = string.Empty;
+        });
+
+        public ICommand SendInviteCommand => new AsyncRelayCommand(async () =>
+        {
+            
         });
 
         public async void Initialize(Guid chatId)

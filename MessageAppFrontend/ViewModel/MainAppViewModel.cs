@@ -17,16 +17,24 @@ namespace MessageAppFrontend.ViewModel
         private readonly IUserApiService _userApiService;
         private readonly IChatViewModelFactory _chatViewModelFactory;
         private readonly INewChatViewModelFactory _newChatViewModelFactory;
+        private readonly IChatInvitationApiService _chatInvitationApiService;
 
         private ObservableCollection<SimpleChat> _chats = new();
+        private ObservableCollection<ChatInvitation> _chatInvitations = new();
         private SimpleChat _selectedChat = null!;
         private User _user = null!;
         private ChatViewModel? _chatViewModel;
+        private bool _isNotificationsPopupOpen = false;
 
         public ObservableCollection<SimpleChat> Chats
         {
             get => _chats;
             set => SetProperty(ref _chats, value);
+        }
+        public ObservableCollection<ChatInvitation> ChatInvitations 
+        { 
+            get => _chatInvitations; 
+            set => SetProperty(ref _chatInvitations, value); 
         }
         public SimpleChat SelectedChat
         {
@@ -49,13 +57,19 @@ namespace MessageAppFrontend.ViewModel
             get => _chatViewModel;
             set => SetProperty(ref _chatViewModel, value);
         }
+        public bool IsNotificationsPopupOpen
+        {
+            get => _isNotificationsPopupOpen;
+            set => SetProperty(ref _isNotificationsPopupOpen, value);
+        }
 
-        public MainAppViewModel(IUserApiService userApiService, IViewNavigation viewNavigation, IChatApiService chatApiService, IChatViewModelFactory chatViewModelFactory, INewChatViewModelFactory createNewChatViewModelFactory)
+        public MainAppViewModel(IUserApiService userApiService, IViewNavigation viewNavigation, IChatApiService chatApiService, IChatViewModelFactory chatViewModelFactory, INewChatViewModelFactory createNewChatViewModelFactory, IChatInvitationApiService chatInvitationApiService)
         {
             _userApiService = userApiService;
             _viewNavigation = viewNavigation;
             _chatViewModelFactory = chatViewModelFactory;
             _newChatViewModelFactory = createNewChatViewModelFactory;
+            _chatInvitationApiService = chatInvitationApiService;
 
             Initialize();
         }
@@ -64,9 +78,10 @@ namespace MessageAppFrontend.ViewModel
         {
             User = await GetUser();
             Chats = await GetChats();
+            ChatInvitations = await GetChatInvitations();
         }
 
-        public ICommand AddChatCommand => new RelayCommand(async () =>
+        public ICommand AddChatCommand => new AsyncRelayCommand(async () =>
         {
             NewChatWindow newChatWindow = new NewChatWindow();
             newChatWindow.DataContext = _newChatViewModelFactory.CreateNewChatViewModel(User.Id);
@@ -74,6 +89,15 @@ namespace MessageAppFrontend.ViewModel
             newChatWindow.ShowDialog();
 
             Chats = await GetChats();
+        });
+
+        public ICommand ShowNotificationsCommand => new AsyncRelayCommand(async () => 
+        {
+            IsNotificationsPopupOpen = !IsNotificationsPopupOpen;
+            if (!IsNotificationsPopupOpen)
+            {
+                await GetChats();
+            }
         });
 
         private async Task<User> GetUser() 
@@ -110,6 +134,23 @@ namespace MessageAppFrontend.ViewModel
             }
             
             return new ObservableCollection<SimpleChat>(chats);
+        }
+
+        private async Task<ObservableCollection<ChatInvitation>> GetChatInvitations()
+        {
+            var apiResponse = await _chatInvitationApiService.GetActiveChatInvitations();
+            if (!apiResponse.IsSuccess)
+            {
+                if (apiResponse.StatusCode == 404)
+                {
+                    return new();
+                }
+
+                MessageBox.Show($"Wystąpił błąd podczas ładowania zaproszeń: {apiResponse.ErrorMessage}", "Błąd");
+                return new();
+            }
+
+            return new ObservableCollection<ChatInvitation>(apiResponse.Data!);
         }
 
         private void LoadChatViewModel()
