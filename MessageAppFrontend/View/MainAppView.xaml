@@ -32,7 +32,8 @@
                 Foreground="White"
                 MinWidth="100"
                 MinHeight="40"/>
-                <Button Command="{Binding ShowNotificationsCommand}" 
+                <Button x:Name="NotificationsButton" 
+                Command="{Binding ShowNotificationsCommand}" 
                 Background="Transparent"
                 BorderThickness="2"
                 Foreground="White"
@@ -40,6 +41,44 @@
                 MinHeight="40">
                     <Image Width="24" Height="24" Source="../Resources/Images/NotificationsIcon.png"/>
                 </Button>
+                
+                <Popup x:Name="NotificationsPopup"
+                    IsOpen="{Binding IsNotificationsPopupOpen}"
+                    Placement="Right"
+                    PlacementTarget="{Binding ElementName=NotificationsButton}"
+                    StaysOpen="False"
+                    AllowsTransparency="True"
+                    PopupAnimation="Slide"
+                    HorizontalOffset="10">
+                    <Border Background="#FF2C2F33"
+                            CornerRadius="8"
+                            Padding="10"
+                            Width="270"
+                            Height="350"
+                            BorderBrush="Gray"
+                            BorderThickness="1">    
+                        <StackPanel>
+                            <TextBlock Text="Chat Invitations"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0 0 0 10"
+                                       HorizontalAlignment="Center"/>
+
+                            <ListBox ItemsSource="{Binding ChatInvitations}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     Foreground="White"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:ChatInvitationControl Invitation="{Binding}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Border>
+                </Popup>
             </StackPanel>
 
             <!-- Lista czatów wypełniająca środek -->

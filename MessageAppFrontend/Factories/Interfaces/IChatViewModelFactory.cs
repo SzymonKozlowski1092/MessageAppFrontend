@@ -1,5 +1,4 @@
 ﻿using MessageAppFrontend.Models;
-using MessageAppFrontend.Services.Interfaces;
 using MessageAppFrontend.ViewModel;
 
 namespace MessageAppFrontend.Factories.Interfaces

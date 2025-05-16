@@ -11,7 +11,7 @@ namespace MessageAppFrontend
 {
     public partial class App : Application
     {
-        private IServiceProvider _serviceProvider = null!;
+        public IServiceProvider Services { get; private set; } = null!;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -23,11 +23,11 @@ namespace MessageAppFrontend
                 var serviceCollection = new ServiceCollection();
                 ConfigureServices(serviceCollection);
 
-                _serviceProvider = serviceCollection.BuildServiceProvider();
+                Services = serviceCollection.BuildServiceProvider();
 
-                var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-                var viewNavigation = _serviceProvider.GetRequiredService<IViewNavigation>();
-                mainWindow.DataContext = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+                var mainWindow = Services.GetRequiredService<MainWindow>();
+                var viewNavigation = Services.GetRequiredService<IViewNavigation>();
+                mainWindow.DataContext = Services.GetRequiredService<MainWindowViewModel>();
                 viewNavigation.NavigateTo<LoginViewModel>();
                 mainWindow.Show();
             }
@@ -47,6 +47,7 @@ namespace MessageAppFrontend
             services.AddSingleton<RegisterViewModel>();
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<MainAppViewModel>();
+            services.AddTransient<ChatInvitationsControlViewModel>();
 
             services.AddSingleton<IViewNavigation, ViewNavigation>();
 
@@ -62,7 +63,7 @@ namespace MessageAppFrontend
 
         private void OnExit(object sender, ExitEventArgs e)
         {
-            if (_serviceProvider is IDisposable disposable)
+            if (Services is IDisposable disposable)
             {
                 disposable.Dispose();
             }
