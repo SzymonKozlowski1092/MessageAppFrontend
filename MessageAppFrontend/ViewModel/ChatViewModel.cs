@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MessageAppFrontend.Factories.Interfaces;
 using MessageAppFrontend.Models;
 using MessageAppFrontend.Services.Interfaces;
+using MessageAppFrontend.View;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -12,7 +14,7 @@ namespace MessageAppFrontend.ViewModel
     {
         private readonly IChatApiService _chatApiService;
         private readonly IMessageApiService _messageApiService;
-        private readonly IChatInvitationApiService _chatInvitationApiService;
+        private readonly ISendChatInvitationViewModelFactory _sendChatInvitationViewModelFactory;
 
         private User user = null!;
         private Chat _chat = null!;
@@ -54,13 +56,14 @@ namespace MessageAppFrontend.ViewModel
 
         public event Action? MessagesLoaded;
 
-        public ChatViewModel(Guid chatId, User user, IChatApiService chatApiService, IMessageApiService messageApiService, IChatInvitationApiService chatInvitationApiService)
+        public ChatViewModel(Guid chatId, User user, IChatApiService chatApiService, IMessageApiService messageApiService, 
+            ISendChatInvitationViewModelFactory sendChatInvitationViewModelFactory)
         {
             _chatApiService = chatApiService;
             _messageApiService = messageApiService;
             User = user;
+            _sendChatInvitationViewModelFactory = sendChatInvitationViewModelFactory;
             Initialize(chatId);
-            _chatInvitationApiService = chatInvitationApiService;
         }
 
         public ICommand SendMessageCommand => new AsyncRelayCommand(async () =>
@@ -87,9 +90,11 @@ namespace MessageAppFrontend.ViewModel
             MessageContent = string.Empty;
         });
 
-        public ICommand SendInviteCommand => new AsyncRelayCommand(async () =>
+        public ICommand SendInviteCommand => new RelayCommand(() =>
         {
-            
+            var sendInvitationWindow = new SendChatInvitationWindow();
+            sendInvitationWindow.DataContext = _sendChatInvitationViewModelFactory.Create(Chat.Id);
+            sendInvitationWindow.ShowDialog();
         });
 
         public async void Initialize(Guid chatId)
