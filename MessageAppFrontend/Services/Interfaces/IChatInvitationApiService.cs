@@ -1,7 +1,5 @@
 ﻿using MessageAppFrontend.Common;
 using MessageAppFrontend.Models;
-using MessageAppFrontend.Models.Dziekanat.Models;
-using RestSharp;
 
 namespace MessageAppFrontend.Services.Interfaces
 {
