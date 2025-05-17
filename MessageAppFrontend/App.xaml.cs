@@ -59,6 +59,7 @@ namespace MessageAppFrontend
 
             services.AddTransient<IChatViewModelFactory, ChatViewModelFactory>();
             services.AddTransient<INewChatViewModelFactory, NewChatViewModelFactory>();
+            services.AddTransient<ISendChatInvitationViewModelFactory, SendChatInvitationViewModelFactory>();
         }
 
         private void OnExit(object sender, ExitEventArgs e)

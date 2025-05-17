@@ -3,20 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MessageAppFrontend.View" xmlns:controls="clr-namespace:MessageAppFrontend.View.Controls"
+             xmlns:local="clr-namespace:MessageAppFrontend.View" 
+             xmlns:controls="clr-namespace:MessageAppFrontend.View.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#FF2C2F33">
         <Grid.RowDefinitions>
-            <!-- Panel nagłówka -->
             <RowDefinition Height="Auto"/>
-            <!-- Lista wiadomości -->
             <RowDefinition Height="*"/>
-            <!-- Pole do wpisania wiadomości -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Nagłówek czatu -->
         <Border Grid.Row="0" Background="#FF23272A" Padding="10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -24,7 +21,6 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Nazwa czatu -->
                 <TextBlock Text="{Binding Name}" 
                    FontSize="18" 
                    FontWeight="Bold" 
@@ -32,7 +28,6 @@
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center"/>
 
-                <!-- Przycisk menu + Popup -->
                 <Grid Grid.Column="1" VerticalAlignment="Center">
                     <Button x:Name="MenuButton"
                     Content="☰"
@@ -68,8 +63,6 @@
             </Grid>
         </Border>
 
-
-        <!-- Lista wiadomości -->
         <ScrollViewer x:Name="MessagesScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
             <ItemsControl ItemsSource="{Binding Messages}">
                 <ItemsControl.ItemTemplate>
@@ -80,7 +73,6 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <!-- Wysyłanie wiadomości -->
         <Border Grid.Row="2" Background="#FF40444B" Padding="8">
             <Grid>
                 <Grid.ColumnDefinitions>

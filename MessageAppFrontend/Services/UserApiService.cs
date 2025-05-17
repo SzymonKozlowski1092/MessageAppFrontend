@@ -42,6 +42,30 @@ namespace MessageAppFrontend.Services
             }
         }
 
+        public async Task<ApiResponse<User>> GetUserByUsername(string username)
+        {
+            RestResponse response = null!;
+            var request = new RestRequest($"{username}", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {AuthToken.Instance.JwtToken}");
+
+            try
+            {
+                response = await _restClient.ExecuteAsync(request);
+                if (!response.IsSuccessful)
+                {
+                    return new ApiResponse<User>(false, response.Content, (int)response.StatusCode);
+                }
+                var user = JsonConvert.DeserializeObject<User>(response.Content!);
+
+                return new ApiResponse<User>(true, user, (int)response.StatusCode);
+            }
+            catch (Exception ex) 
+            {
+                _logger.Error(ex, ex.Message);
+                return new ApiResponse<User>(false, ex.Message, response is null ? 0 : (int)response!.StatusCode);
+            }
+        }
+
         public async Task<ApiResponse<List<SimpleChat>>> GetUserChats()
         {
             RestResponse response = null!;
