@@ -42,10 +42,10 @@ namespace MessageAppFrontend.Services
             }
         }
 
-        public async Task<ApiResponse> AcceptChatInvitation(Guid chatId)
+        public async Task<ApiResponse> AcceptChatInvitation(Guid invitationId)
         {
             RestResponse response = null!;
-            var request = new RestRequest($"ChatInvitation/AcceptInvitation/{chatId}", Method.Put);
+            var request = new RestRequest($"ChatInvitation/AcceptInvitation/{invitationId}", Method.Put);
             request.AddHeader("Authorization", $"Bearer {AuthToken.Instance.JwtToken}");
 
             try
@@ -67,10 +67,10 @@ namespace MessageAppFrontend.Services
             }
         }
 
-        public async Task<ApiResponse> DeclineChatInvitation(Guid chatId)
+        public async Task<ApiResponse> DeclineChatInvitation(Guid invitationId)
         {
             RestResponse response = null!;
-            var request = new RestRequest($"ChatInvitation/DeclineInvitation/{chatId}", Method.Put);
+            var request = new RestRequest($"ChatInvitation/DeclineInvitation/{invitationId}", Method.Put);
             request.AddHeader("Authorization", $"Bearer {AuthToken.Instance.JwtToken}");
 
             try

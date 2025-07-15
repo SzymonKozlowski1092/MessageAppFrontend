@@ -26,7 +26,7 @@ namespace MessageAppFrontend.ViewModel
 
         public ICommand AcceptInvitationCommand => new AsyncRelayCommand(async() =>
         {
-            var apiResponse = await _chatInvitationApiService.AcceptChatInvitation(Invitation.ChatId);
+            var apiResponse = await _chatInvitationApiService.AcceptChatInvitation(Invitation.Id);
             if (!apiResponse.IsSuccess) 
             {
                 MessageBox.Show(apiResponse.ErrorMessage, apiResponse.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
@@ -38,7 +38,7 @@ namespace MessageAppFrontend.ViewModel
 
         public ICommand DeclineInvitationCommand => new AsyncRelayCommand(async () =>
         {
-            var apiResponse = await _chatInvitationApiService.AcceptChatInvitation(Invitation.ChatId);
+            var apiResponse = await _chatInvitationApiService.AcceptChatInvitation(Invitation.Id);
             if (!apiResponse.IsSuccess)
             {
                 MessageBox.Show(apiResponse.ErrorMessage, apiResponse.StatusCode.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
